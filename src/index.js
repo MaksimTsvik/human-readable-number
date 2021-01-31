@@ -1,13 +1,17 @@
 module.exports = function toReadable(number) {
-    let ones = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
+    let ones = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine',
         'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen',
         'eighteen', 'nineteen'];
     let tens = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty',
         'ninety'];
     let numberArr = number.toString().split('');
 
+    if (number == 0) {
+        return 'zero';
+    }
+
     if (number < 20) {
-        return ones[+number];
+        return ones[number];
     }
 
     if (number < 100 && number > 19) {
@@ -15,7 +19,10 @@ module.exports = function toReadable(number) {
     }
 
     if (number > 99) {
-        return (ones[numberArr[0]] + ' hundred ' + tens[numberArr[1]] + ' ' + ones[numberArr[2]]);
+        if (numberArr[2] == '0' && numberArr[1] == '0') {
+            return (ones[numberArr[0]] + ' hundred ');
+        } else
+            return (ones[numberArr[0]] + ' hundred ' + toReadable(Number(numberArr[1] + numberArr[2])));    //tens[numberArr[1]] + ' ' + ones[numberArr[2]]);
     }
 
 }
